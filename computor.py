@@ -2,19 +2,28 @@
 import sys
 from typing import *
 from dataclasses import dataclass
-
-@dataclass(order=True)
-class Monomial:
-    exponent:       float = 0
-    coefficient:    float = 0
-# print(Monomial(5).exponent, Monomial(5 ,4).exponent, Monomial(exponent=3).coefficient)
-
 import logging
 from logging import debug
 
 logging.basicConfig(level=logging.DEBUG)
 
 
+
+def tryInt(num: int | float) -> int | float:
+    if isinstance(num, float):
+        return int(num) if num.is_integer() else num
+    return num
+
+
+@dataclass(order=True)
+class Monomial:
+    exponent:       float = 0
+    coefficient:    float = 0
+
+    def __str__(self) -> str:
+        # I need the abs because of the project output "specifications". I'm playing it safe
+        return f"{abs(tryInt(self.coefficient))} * X^{abs(tryInt(self.exponent))}"
+# debug(Monomial(5).exponent, Monomial(5 ,4).exponent, Monomial(exponent=3).coefficient)
 
 
 def digitize(equation: str) -> list[Monomial | Literal['='] ]:
@@ -23,7 +32,7 @@ def digitize(equation: str) -> list[Monomial | Literal['='] ]:
 
     exprs = equation.split()
     # Not Necessary: exprs = [expr for expr in sys.argv[1].split(" ") if expr != "" ]
-    print(exprs)
+    debug(exprs)
 
     i : int = 0
     while i < len(exprs):
@@ -49,7 +58,7 @@ def digitize(equation: str) -> list[Monomial | Literal['='] ]:
             poly[-1].exponent = float(exprs[i + 2][2:]) #TODO: check negative and fraction exps
             i += 2
         i += 1
-    print(poly)
+    debug(poly)
     return poly
 
 #TODO: change this section ########################################
@@ -105,13 +114,21 @@ reducedForm = reduce(digitalForm)
 debug(f"reducedForm: {reducedForm}")
 
 
+def polyPrint(poly: list[Monomial]) -> None:
+    if poly[0].coefficient < 0:
+        print("-", end="")
+    print(poly[0], end="")
+    for monom in poly[1:]:
+        if monom.coefficient >= 0:
+            print(" + ", sep="", end="")
+        else:
+            print(" - ", sep="", end="")
+        print(monom, end='')
+    print(" = 0")
 
-# polyPrint(reducedForm)
+print("Reduced form: ", end="")
+polyPrint(reducedForm)
 
 
-def tryInt(num: int | float) -> int | float:
-    if isinstance(num, float):
-        return int(num) if num.is_integer() else num
-    return num
 maxExp = max(reducedForm).exponent
 print("Polynomial degree:", tryInt(maxExp) )
