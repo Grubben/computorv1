@@ -4,9 +4,9 @@ from Monomial import *
 from digitize import digitize
 from reduce import reduce
 from polyPrint import polyPrint
+from solve2ndEquation import solve2ndEquation
 
-
-basicConfig(level=INFO)
+basicConfig(level=DEBUG)
 
 
 
@@ -39,6 +39,6 @@ elif maxExp < 2:
     pass
 elif maxExp == 2:
     #TODO
-    pass
+    solve2ndEquation(reducedForm)
 else:
     print("The polynomial degree is strictly greater than 2, I can't solve.")
