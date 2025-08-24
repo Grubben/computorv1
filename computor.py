@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import sys
-
+from typing import *
 from dataclasses import dataclass
 @dataclass
 class Monomial:
@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 
-def computor(equation: str):
+def digitize(equation: str) -> list[Monomial | Literal['='] ]:
     # print(equation)
     poly : list[Monomial] = []
 
@@ -49,16 +49,40 @@ def computor(equation: str):
             i += 2
         i += 1
     print(poly)
-
-
-
-
-
-
+    return poly
 
 # if len(sys.argv) < 2:
 #     exit
 
-solutions = computor("5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0")
-# solutions = computor(sys.argv[1])
+# solutions = digitize(sys.argv[1])
+digitalForm = digitize("5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0")
 
+def prepTransition(poly: list[Monomial]):
+    pass
+
+def simplify(poly: list[Monomial]) -> list[Monomial]:
+    pass
+
+def reduce(digiPoly: list[Monomial | Literal['=']]) -> list[Monomial]:
+    try:
+        eq_idx = digiPoly.index("=")
+    except ValueError:
+        #TODO: make this more robust
+        print("No equal found")
+        eq_idx = len(digiPoly)
+    left = digiPoly[:eq_idx]
+    right = digiPoly[eq_idx + 1:]
+    # debug(f"left: {left}")
+    # debug(f"right: {right}")
+
+    right = prepTransition(right)
+    left.extend(right)
+
+    left  = simplify(left)
+    debug(f"simplifiedLeft: {left}")
+
+    return left
+
+
+
+reducedForm = reduce(digitalForm)
