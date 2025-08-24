@@ -2,6 +2,7 @@
 import sys
 from typing import *
 from dataclasses import dataclass
+
 @dataclass
 class Monomial:
     coefficient:    float = 0
@@ -24,7 +25,7 @@ def digitize(equation: str) -> list[Monomial | Literal['='] ]:
     # Not Necessary: exprs = [expr for expr in sys.argv[1].split(" ") if expr != "" ]
     print(exprs)
 
-    i : str = 0
+    i : int = 0
     while i < len(exprs):
         # print(exprs[i])
         if exprs[i] == "=":
@@ -57,11 +58,15 @@ def digitize(equation: str) -> list[Monomial | Literal['='] ]:
 # solutions = digitize(sys.argv[1])
 digitalForm = digitize("5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0")
 
-def prepTransition(poly: list[Monomial]):
-    pass
+def additiveInvert(poly: list[Monomial]) -> list[Monomial]:
+    # for monom in poly:
+    #     monom.coefficient *= -1
+    # return poly
+    return [Monomial(-m.coefficient, m.exponent) for m in poly]
 
 def simplify(poly: list[Monomial]) -> list[Monomial]:
-    pass
+    for monom in poly:
+        pass
 
 def reduce(digiPoly: list[Monomial | Literal['=']]) -> list[Monomial]:
     try:
@@ -75,7 +80,8 @@ def reduce(digiPoly: list[Monomial | Literal['=']]) -> list[Monomial]:
     # debug(f"left: {left}")
     # debug(f"right: {right}")
 
-    right = prepTransition(right)
+    right = additiveInvert(right)
+    debug(f"right's additive inversion: {right}")
     left.extend(right)
 
     left  = simplify(left)
