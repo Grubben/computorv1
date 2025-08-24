@@ -32,5 +32,13 @@ polyPrint(reducedForm)
 maxExp = tryInt(max(reducedForm).exponent)
 print("Polynomial degree:", maxExp)
 
-# if maxExp == 2:
-#     discriminant =
+if maxExp < 0:
+    raise ValueError("Polynomial degree cannot be less than 0.")
+elif maxExp < 2:
+    #TODO
+    pass
+elif maxExp == 2:
+    #TODO
+    pass
+else:
+    print("The polynomial degree is strictly greater than 2, I can't solve.")
