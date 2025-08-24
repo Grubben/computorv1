@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 def computor(equation: str):
     # print(equation)
-    poly : list[Monomial] = [Monomial(1)]
+    poly : list[Monomial] = []
 
     exprs = equation.split()
     # Not Necessary: exprs = [expr for expr in sys.argv[1].split(" ") if expr != "" ]
@@ -27,24 +27,25 @@ def computor(equation: str):
     i : str = 0
     while i < len(exprs):
         # print(exprs[i])
-        debug(f"{exprs[i]}")
         if exprs[i] == "=":
             poly.append(
-                #TODO: but what if it's negative??
-                Monomial(1)
-            )
-            pass #TODO
-        elif exprs[i] == "-":
-            poly.append(
-                Monomial(-1)
-            )
-        elif exprs[i] == "+":
-            poly.append(
-                Monomial(1)
+                "="
             )
         else:
+            poly.append(
+                Monomial(1)
+            )
+            if exprs[i] == "-":
+                debug(f"Creating negative polynomial")
+                poly[-1].coefficient = -1
+                i += 1
+            elif exprs[i] == "+":
+                debug(f"Creating positive polynomial")
+                i += 1
+            # else:
+            debug(f"{exprs[i]}")
             poly[-1].coefficient *= float(exprs[i])
-            poly[-1].exponent = float(exprs[i + 2][2:])
+            poly[-1].exponent = float(exprs[i + 2][2:]) #TODO: check negative and fraction exps
             i += 2
         i += 1
     print(poly)
