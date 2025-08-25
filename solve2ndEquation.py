@@ -31,6 +31,7 @@ def neg_sqrt(num, tolerance, max_iter):
     return (norm_complex(r1*1j), norm_complex(r2*1j))
 
 def sqrt_guess(num, tolerance=1e-12, max_iter=200):
+    #TODO: wait what?? what have i been doing? why am i outputting 2 options???
     if num == 0:
         return (0.0, 0.0)
     
@@ -45,12 +46,23 @@ def solve2ndEquation(poly: list[Monomial]):
     discriminant = poly[1].coefficient * poly[1].coefficient - 4 * poly[2].coefficient * poly[0].coefficient
     debug(discriminant)
 
+    dsq, _ = sqrt_guess(discriminant) # discriminant_sqrt
+    sol1 = (- poly[1].coefficient + dsq) / (2* poly[2].coefficient)
+    sol2 = (- poly[1].coefficient - dsq) / (2* poly[2].coefficient)
+    debug(sol1, sol2)
+
     if discriminant > 0:
         print("Discriminant is strictly positive, the two solutions are:")
+        print(sol1)
+        print(sol2)
     elif discriminant == 0:
         print("Discriminant is zero, the only solution is:")
+        #TODO: is this enough?
+        print(sol1)
     else:
         print("Discriminant is strictly negative, the two complex solutions are:")
+        print(sol1)
+        print(sol2)
 
 
 
