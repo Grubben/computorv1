@@ -1,30 +1,44 @@
 from Monomial import *
 
-def mysqrt(num, *, tolerance: float = 1e-12, max_iter: int = 50):
-    # Convert input to complex if necessary
-    if isinstance(num, (int, float)):
-        if num < 0:
-            num = complex(num, 0)
-        else:
-            num = float(num)
-    else:
-        num = complex(num)
-
-    if num == 0:
-        return (0, 0)
-
-    # Initial guess
-    g = num if abs(num) >= 1 else 1
-
+def pos_sqrt(num, tolerance, max_iter):
+    lo, hi = 0.0, max(1.0, num)
     for _ in range(max_iter):
-        g_next = 0.5 * (g + num / g)
-        if abs(g_next - g) <= tolerance * max(abs(g_next), 1.0):
-            root = g_next
-            return (root, -root)
-        g = g_next
+        mid = 0.5 * (lo + hi)
+        sq = mid * mid
 
-    # fallback (shouldn’t really happen)
-    return (g, -g)
+        if abs(sq - num) <= tolerance * max(num, 1.0):
+            # I need to multiply the tolerance because:
+                # - for big numbers the tolerance is too small
+                # - for small numbers tolerance is too big
+            return (mid, -mid)
+
+        if sq < num:
+            lo = mid
+        else:
+            hi = mid
+
+    mid = 0.5 * (lo + hi)
+    return (mid, -mid)
+
+def norm_complex(z: complex) -> complex:
+    re = 0.0 if z.real == 0.0 else z.real
+    im = 0.0 if z.imag == 0.0 else z.imag
+    return complex(re, im)
+
+def neg_sqrt(num, tolerance, max_iter):
+    pos_val = -num
+    r1, r2 = pos_sqrt(pos_val, tolerance, max_iter)
+    return (norm_complex(r1*1j), norm_complex(r2*1j))
+
+def sqrt_guess(num, tolerance=1e-12, max_iter=200):
+    if num == 0:
+        return (0.0, 0.0)
+    
+    elif num > 0:
+        return pos_sqrt(num, tolerance, max_iter)
+
+    else:
+        return neg_sqrt(num, tolerance, max_iter)
 
 
 def solve2ndEquation(poly: list[Monomial]):
@@ -38,4 +52,13 @@ def solve2ndEquation(poly: list[Monomial]):
     else:
         print("Discriminant is strictly negative, the two complex solutions are:")
 
-    print(mysqrt(5), mysqrt(37), mysqrt(36), mysqrt(-4), mysqrt(-7))
+
+
+import cmath
+if __name__ == "__main__":
+    print(sqrt_guess(5))
+    print(sqrt_guess(37))
+    print(sqrt_guess(36))
+    print(sqrt_guess(-4))
+    print(sqrt_guess(-7))
+    
