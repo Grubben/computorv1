@@ -6,7 +6,7 @@ from digitize import digitize
 from reduce import reduce
 from polyPrint import polyPrint
 from solve2ndEquation import solve2ndEquation
-
+from solve1dEquation import solve1dEquation
 basicConfig(level=INFO)
 
 
@@ -28,13 +28,13 @@ def computor(equation: str):
     polyPrint(reducedForm)
 
     maxExp = tryInt(max(reducedForm).exponent)
-    print("Polynomial degree:", maxExp)
+    print("Polynomial degree:", maxExp) #TODO: don't print if it's 0
 
     if maxExp < 0:
         raise ValueError("Polynomial degree cannot be less than 0.")
     elif maxExp < 2:
         #TODO
-        pass
+        solve1dEquation(reducedForm)
     elif maxExp == 2:
         #TODO
         solve2ndEquation(reducedForm)
@@ -43,6 +43,8 @@ def computor(equation: str):
     print()
 
 computor("5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0")
+print()
+computor("5 * X^0 + 4 * X^1 = 4 * X^0")
 print()
 computor("8 * X^0 - 6 * X^1 + 0 * X^2 - 5.6 * X^3 = 3 * X^0")
 print()
