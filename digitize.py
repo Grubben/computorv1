@@ -17,6 +17,8 @@ def digitize(equation: str) -> list[Monomial | Literal['='] ]:
                 "="
             )
         else:
+            if exprs[i] == "0" and i == len(exprs) -1:
+                break
             poly.append(
                 Monomial(0, 1)
             )
