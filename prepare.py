@@ -1,4 +1,4 @@
-from Monomial import *
+from Monomial import Monomial, Literal, debug
 
 
 def digitize(equation: str) -> list[Monomial | Literal['='] ]:

@@ -1,4 +1,4 @@
-from Monomial import *
+from Monomial import Monomial, Literal, debug
 
 def polyPrint(poly: list[Monomial]) -> None:
     if poly[0].coefficient < 0:

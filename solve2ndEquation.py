@@ -49,7 +49,8 @@ def solve2ndEquation(poly: list[Monomial]):
     dsq, _ = sqrt_guess(discriminant) # discriminant_sqrt
     sol1 = (- poly[1].coefficient + dsq) / (2* poly[2].coefficient)
     sol2 = (- poly[1].coefficient - dsq) / (2* poly[2].coefficient)
-    debug(sol1, sol2)
+    debug(sol1)
+    debug(sol2)
 
     if discriminant > 0:
         print("Discriminant is strictly positive, the two solutions are:")

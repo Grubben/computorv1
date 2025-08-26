@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from logging import *
-from typing import *
+from logging import debug
+from typing import Literal
 
 def tryInt(num: int | float) -> int | float:
     if isinstance(num, float):

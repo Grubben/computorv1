@@ -1,4 +1,4 @@
-from Monomial import *
+from Monomial import Monomial, Literal, debug
 
 def additiveInvert(poly: list[Monomial]) -> list[Monomial]:
     # for monom in poly:
@@ -6,7 +6,7 @@ def additiveInvert(poly: list[Monomial]) -> list[Monomial]:
     # return poly
     return [Monomial(m.exponent, -m.coefficient) for m in poly]
 
-def simplify(poly: list[Monomial]) -> list[Monomial]:
+def simplify(poly: list[Monomial]) -> None:
     i: int = 0
     while i < len(poly):
         for m in poly:
@@ -23,8 +23,8 @@ def reduce(digiPoly: list[Monomial | Literal['=']]) -> list[Monomial]:
         #TODO: make this more robust
         print("No equal found")
         eq_idx = len(digiPoly)
-    left = digiPoly[:eq_idx]
-    right = digiPoly[eq_idx + 1:]
+    left: list[Monomial]= digiPoly[:eq_idx]
+    right: list[Monomial] = digiPoly[eq_idx + 1:]
     debug(f"left: {left}")
     debug(f"right: {right}")
 
