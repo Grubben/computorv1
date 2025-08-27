@@ -11,3 +11,11 @@ def polyPrint(poly: list[Monomial]) -> None:
             print(" - ", sep="", end="")
         print(monom, end='')
     print(" = 0")
+
+
+def hasWeird(poly: list[Monomial]) -> None:
+    """Checks if there are fractional or negative exponents"""
+    for m in poly:
+        if m.exponent < 0 or not m.exponent.is_integer():
+            return True
+    return False
