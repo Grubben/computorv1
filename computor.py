@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import sys
-from Monomial import Monomial, Literal, debug, tryInt
+from Monomial import *
 from logging import *
 from digitize import digitize
 from reduce import reduce
@@ -27,30 +27,37 @@ def computor(equation: str):
     print("Reduced form: ", end="")
     polyPrint(reducedForm)
 
-    maxExp = tryInt(max(reducedForm).exponent)
-    if maxExp > 0:
-        print("Polynomial degree:", maxExp) #TODO: don't print if it's 0
+    maxMonom = max(reducedForm)
+    if isinstance(maxMonom.exponent, Fraction) and not maxMonom.exponent.is_integer():
+        print(f"Polynomial degree is not specified for there is a fractional exponent: {maxMonom.exponent}")
+        return
+    elif maxMonom.exponent > 0:
+        print("Polynomial degree:", tryInt(maxMonom.exponent))
 
-    if maxExp < 0:
+    if maxMonom.exponent < 0:
         raise ValueError("Polynomial degree cannot be less than 0.")
-    elif maxExp < 2:
+    elif len(reducedForm) < 2 or maxMonom.exponent < 2:
         solve1dEquation(reducedForm)
-    elif maxExp == 2:
+    # elif len(reducedForm) < 2:
+    #     solve1dEquation(reducedForm)
+    elif maxMonom.exponent == 2:
         solve2ndEquation(reducedForm)
     else:
         print("The polynomial degree is strictly greater than 2, I can't solve.")
     print()
 
-computor("4 * X^2/3 - 8 * X^0 = 0")
-
-# computor("5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0")
+# computor("4 * X^2/3 - 8 * X^0 = 0")
 # print()
-# computor("5 * X^0 + 4 * X^1 = 4 * X^0")
+# computor("2/3 * X^2 = 0")
 # print()
-# computor("8 * X^0 - 6 * X^1 + 0 * X^2 - 5.6 * X^3 = 3 * X^0")
-# print()
-# computor("6 * X^0 = 6 * X^0")
-# print()
-# computor("10 * X^0 = 15 * X^0")
-# print()
-# computor("1 * X^0 + 2 * X^1 + 5 * X^2 = 0")
+computor("5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0")
+print()
+computor("5 * X^0 + 4 * X^1 = 4 * X^0")
+print()
+computor("8 * X^0 - 6 * X^1 + 0 * X^2 - 5.6 * X^3 = 3 * X^0")
+print()
+computor("6 * X^0 = 6 * X^0")
+print()
+computor("10 * X^0 = 15 * X^0")
+print()
+computor("1 * X^0 + 2 * X^1 + 5 * X^2 = 0")

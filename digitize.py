@@ -1,4 +1,4 @@
-from Monomial import Monomial, Literal, debug
+from Monomial import *
 
 
 def digitize(equation: str) -> list[Monomial | Literal['='] ]:
@@ -31,8 +31,8 @@ def digitize(equation: str) -> list[Monomial | Literal['='] ]:
                 i += 1
             # else:
             debug(f"{exprs[i]}")
-            poly[-1].coefficient *= float(exprs[i])
-            poly[-1].exponent = float(exprs[i + 2][2:]) #TODO: check negative and fraction exps
+            poly[-1].coefficient *= Fraction(exprs[i])
+            poly[-1].exponent = Fraction(exprs[i + 2][2:]) #TODO: check negative and fraction exps
             i += 2
         i += 1
     debug(poly)
