@@ -1,5 +1,6 @@
 from Monomial import *
 from sqrt_guess import sqrt_guess
+
 def solve2ndEquationFull(poly: list[Monomial]):
     discriminant = poly[1].coefficient * poly[1].coefficient - 4 * poly[2].coefficient * poly[0].coefficient
     debug(discriminant)

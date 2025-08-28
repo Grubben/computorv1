@@ -61,8 +61,10 @@ def computor(equation: str):
 
 # computor("2/3 * X^0 + 5/6 * X^1 + 9/7 * X^2 = 5/4 * X^2 - 123/7 * X^1/4")
 # print()
-
-if len(sys.argv) < 2:
+nargs = len(sys.argv)
+if nargs < 2:
     exit(1)
-else:
+elif nargs == 2:
     computor(sys.argv[1])
+else:
+    print("Too many arguments given:", nargs)
