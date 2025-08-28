@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 from Monomial import *
-from logging import *
+from logging import basicConfig, INFO
 from digitize import digitize
 from reduce import reduce
 from polyPrint import polyPrint, hasWeird
@@ -27,8 +27,9 @@ def computor(equation: str):
     print("Reduced form: ", end="")
     polyPrint(reducedForm)
 
-    if hasWeird(reducedForm):
-        print(f"Polynomial degree is not specified for there is a fractional exponent: {maxMonom.exponent}")
+
+    if weird := hasWeird(reducedForm):
+        print(f"Polynomial degree is not specified for there is a fractional exponent: {weird}")
         return
 
     maxMonom = max(reducedForm)
@@ -67,5 +68,10 @@ def computor(equation: str):
 # print()
 # computor("1 * X^0 + 2 * X^1 + 5 * X^2 = 0")
 
-computor("3 * X^0 + 2 * X^1 + 7 * X^-2 = -4 * X^0")
-print()
+# computor("3 * X^0 + 2 * X^1 + 7 * X^-2 = -4 * X^0")
+# print()
+# computor("- 3 * X^0 - 2 * X^1 - 7 * X^2 = - 4 * X^0")
+# print()
+
+# computor("2/3 * X^0 + 5/6 * X^1 + 9/7 * X^2 = 5/4 * X^2 - 123/7 * X^1/4")
+# print()

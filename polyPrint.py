@@ -1,4 +1,4 @@
-from Monomial import Monomial, Literal, debug
+from Monomial import *
 
 def polyPrint(poly: list[Monomial]) -> None:
     if poly[0].coefficient < 0:
@@ -13,9 +13,9 @@ def polyPrint(poly: list[Monomial]) -> None:
     print(" = 0")
 
 
-def hasWeird(poly: list[Monomial]) -> None:
+def hasWeird(poly: list[Monomial]) -> float | Fraction:
     """Checks if there are fractional or negative exponents"""
     for m in poly:
         if m.exponent < 0 or not m.exponent.is_integer():
-            return True
-    return False
+            return m.exponent
+    return Fraction("0/1")

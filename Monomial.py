@@ -26,7 +26,8 @@ class Monomial:
     exponent:       float | Fraction = 0
     coefficient:    float | Fraction = 0
 
+
     def __str__(self) -> str:
         # I need the abs because of the project output "specifications". I'm playing it safe
-        return f"{tryInt(float(self.coefficient), True)} * X^{tryInt(self.exponent, True)}"
+        return f"{tryInt(self.coefficient, True)} * X^{tryInt(self.exponent, True)}"
 # debug(Monomial(5).exponent, Monomial(5 ,4).exponent, Monomial(exponent=3).coefficient)
