@@ -5,8 +5,8 @@ from logging import basicConfig, INFO
 from digitize import digitize
 from reduce import reduce
 from polyPrint import polyPrint, hasWeird
-from solve2ndEquation import solve2ndEquation
-from solve1dEquation import solve1dEquation
+from solve2ndEquation import solve2ndEquationFull
+from solveNonFullEquation import solveNonFullEquation
 basicConfig(level=INFO)
 
 
@@ -21,25 +21,17 @@ def computor(equation: str):
 
 
     if weird := hasWeird(reducedForm):
-        print(f"Polynomial degree is not specified for there is a fractional exponent: {weird}")
+        print(f"Polynomial degree is not specified for there is an illegal exponent: {weird}")
         return
-
     maxMonom = max(reducedForm)
-    if isinstance(maxMonom.exponent, Fraction) and not MyFraction.from_fraction(maxMonom.exponent).is_integer():
-        #TODO: this needs to be reworked since I made the hasWeird
-        print(f"Polynomial degree is not specified for there is a fractional exponent: {maxMonom.exponent}")
-        return
-    elif maxMonom.exponent > 0:
-        print("Polynomial degree:", tryInt(maxMonom.exponent))
+    print("Polynomial degree:", tryInt(maxMonom.exponent))
 
     if maxMonom.exponent < 0:
         raise ValueError("Polynomial degree cannot be less than 0.")
-    elif len(reducedForm) < 2 or maxMonom.exponent < 2:
-        solve1dEquation(reducedForm)
-    # elif len(reducedForm) < 2:
-    #     solve1dEquation(reducedForm)
+    elif len(reducedForm) < 3:
+        solveNonFullEquation(reducedForm)
     elif maxMonom.exponent == 2:
-        solve2ndEquation(reducedForm)
+        solve2ndEquationFull(reducedForm)
     else:
         print("The polynomial degree is strictly greater than 2, I can't solve.")
     print()
