@@ -1,7 +1,24 @@
 from dataclasses import dataclass
 from logging import debug
-from typing import Literal
+from typing import Literal, Union
 from fractions import Fraction
+
+class MyFraction(Fraction):
+    def __new__(cls, numerator=0, denominator=None):
+        return super().__new__(cls, numerator, denominator)
+    
+    def is_integer(self) -> bool:
+        return self.denominator == 1
+    
+    @classmethod
+    def from_fraction(cls, frac: Fraction) -> "MyFraction":
+        # Create MyFraction from numerator and denominator of the Fraction
+        return cls(frac.numerator, frac.denominator)
+
+a = MyFraction(3,2)
+b = MyFraction(1, 2)
+c = MyFraction.from_fraction(a + b)
+print(abs(c), type(abs(c)))
 
 def tryInt(num: int | float | Fraction, wantAbs=False) -> str:
     """
@@ -12,10 +29,13 @@ def tryInt(num: int | float | Fraction, wantAbs=False) -> str:
     """
     if isinstance(num, int):
         final = num
-    elif num.is_integer():
-        final = int(num)
     else:
-        final = num
+        if isinstance(num, Fraction):
+            num = MyFraction.from_fraction(num)
+        if num.is_integer():
+            final = int(num)
+        else:
+            final = num
     
     if wantAbs:
         return str(abs(final))

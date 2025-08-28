@@ -10,14 +10,6 @@ from solve1dEquation import solve1dEquation
 basicConfig(level=INFO)
 
 
-
-#TODO: change this section ########################################
-# if len(sys.argv) < 2:
-#     exit
-
-# solutions = digitize(sys.argv[1])
-###################################################################
-
 def computor(equation: str):
     digitalForm = digitize(equation)
 
@@ -33,7 +25,7 @@ def computor(equation: str):
         return
 
     maxMonom = max(reducedForm)
-    if isinstance(maxMonom.exponent, Fraction) and not maxMonom.exponent.is_integer():
+    if isinstance(maxMonom.exponent, Fraction) and not MyFraction.from_fraction(maxMonom.exponent).is_integer():
         #TODO: this needs to be reworked since I made the hasWeird
         print(f"Polynomial degree is not specified for there is a fractional exponent: {maxMonom.exponent}")
         return
@@ -73,5 +65,10 @@ def computor(equation: str):
 # computor("- 3 * X^0 - 2 * X^1 - 7 * X^2 = - 4 * X^0")
 # print()
 
-# computor("2/3 * X^0 + 5/6 * X^1 + 9/7 * X^2 = 5/4 * X^2 - 123/7 * X^1/4")
-# print()
+computor("2/3 * X^0 + 5/6 * X^1 + 9/7 * X^2 = 5/4 * X^2 - 123/7 * X^1/4")
+print()
+
+if len(sys.argv) < 2:
+    exit(1)
+else:
+    computor(sys.argv[1])
