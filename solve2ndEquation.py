@@ -54,15 +54,15 @@ def solve2ndEquation(poly: list[Monomial]):
 
     if discriminant > 0:
         print("Discriminant is strictly positive, the two solutions are:")
-        print(f"{sol1:.7g}")
-        print(f"{sol2:.7g}")
+        print(f"{smart_format(sol1)}")
+        print(f"{smart_format(sol2)}")
     elif discriminant == 0:
         print("Discriminant is zero, the only solution is:")
-        print(f"{sol1:.7g}")
+        print(f"{smart_format(sol1)}")
     else:
         print("Discriminant is strictly negative, the two complex solutions are:")
-        print(f"{sol1:.7g}")
-        print(f"{sol2:.7g}")
+        print(f"{smart_format(sol1)}")
+        print(f"{smart_format(sol2)}")
 
 
 

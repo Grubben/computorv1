@@ -3,6 +3,7 @@ from logging import debug
 from typing import Literal, Union
 from fractions import Fraction
 
+
 class MyFraction(Fraction):
     def __new__(cls, numerator=0, denominator=None):
         return super().__new__(cls, numerator, denominator)
@@ -15,10 +16,15 @@ class MyFraction(Fraction):
         # Create MyFraction from numerator and denominator of the Fraction
         return cls(frac.numerator, frac.denominator)
 
-a = MyFraction(3,2)
-b = MyFraction(1, 2)
-c = MyFraction.from_fraction(a + b)
-print(abs(c), type(abs(c)))
+def smart_format(sol: Fraction | MyFraction | float | complex) -> str:
+    if isinstance(sol, complex):
+        real = float(sol.real)
+        imag = float(sol.imag)
+        return f"{real:.7g} + {imag:.7g}j"
+    elif isinstance(sol, Fraction):
+        return f"{float(sol):.7g}"
+    else:
+        return f"{sol:.7g}"
 
 def tryInt(num: int | float | Fraction, wantAbs=False) -> str:
     """

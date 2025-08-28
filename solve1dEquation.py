@@ -12,6 +12,6 @@ def solve1dEquation(poly: list[Monomial]) -> None :
     else:
         sol = - poly[0].coefficient / poly[1].coefficient
         print("The solution is")
-        print(f"{sol:.7g}")
+        print(f"{smart_format(sol)}")
     
     

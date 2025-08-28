@@ -3,7 +3,7 @@ from Monomial import Monomial, Literal, debug
 
 def digitize(equation: str) -> list[Monomial | Literal['='] ]:
     # print(equation)
-    poly : list[Monomial] = []
+    poly : list[Monomial | Literal["="]] = []
 
     exprs = equation.split()
     # Not Necessary: exprs = [expr for expr in sys.argv[1].split(" ") if expr != "" ]
