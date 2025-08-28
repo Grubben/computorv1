@@ -28,12 +28,14 @@ def computor(equation: str):
 
     if maxMonom.exponent < 0:
         raise ValueError("Polynomial degree cannot be less than 0.")
+    elif maxMonom.exponent > 2:
+        print("The polynomial degree is strictly greater than 2, I can't solve.")
     elif len(reducedForm) < 3:
         solveNonFullEquation(reducedForm)
     elif maxMonom.exponent == 2:
         solve2ndEquationFull(reducedForm)
     else:
-        print("The polynomial degree is strictly greater than 2, I can't solve.")
+        print("ERROR")
     print()
 
 # computor("4 * X^2/3 - 8 * X^0 = 0")
